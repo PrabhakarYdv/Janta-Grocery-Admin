@@ -1,6 +1,6 @@
 package com.prabhakar.jantagroceryadmin.models
 
-data class UserModel(
+data class AdminModel(
     val uId: String,
     val adminNumber: String,
 )

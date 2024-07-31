@@ -7,7 +7,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.prabhakar.jantagroceryadmin.Utils
-import com.prabhakar.jantagroceryadmin.models.UserModel
+import com.prabhakar.jantagroceryadmin.models.AdminModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.concurrent.TimeUnit
 
@@ -54,7 +54,7 @@ class AuthViewModel : ViewModel() {
         PhoneAuthProvider.verifyPhoneNumber(option)
     }
 
-    fun signWithPhoneAuth(userNumber: String, otp: String, userModel: UserModel?) {
+    fun signWithPhoneAuth(userNumber: String, otp: String, adminModel: AdminModel?) {
         val credential = PhoneAuthProvider.getCredential(_verificationId.value.toString(), otp)
 
         Utils.getFirebaseAuthInstance().signInWithCredential(credential)
