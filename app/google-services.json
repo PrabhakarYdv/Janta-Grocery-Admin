@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "722210240690",
+    "project_id": "janta-grocery",
+    "storage_bucket": "janta-grocery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722210240690:android:e85d68a0cafaaa4461f1ab",
+        "android_client_info": {
+          "package_name": "com.prabhakar.jantagroceryadmin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACznlzEF-QlSkvFO9vE9lP1wdFRr0LBTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
