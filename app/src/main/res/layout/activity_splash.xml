@@ -8,11 +8,23 @@
     android:orientation="vertical"
     tools:context=".view.activity.SplashActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/rectangle_bg"
+        android:padding="10dp"
+        android:text="ADMIN"
+        android:textColor="@color/black"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:src="@drawable/app_icon" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,16 +52,5 @@
             android:textStyle="bold" />
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@drawable/rectangle_bg"
-        android:padding="10dp"
-        android:text="ADMIN"
-        android:textColor="@color/black"
-        android:textSize="40dp"
-        android:textStyle="bold" />
 
 </LinearLayout>
