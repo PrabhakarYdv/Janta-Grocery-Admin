@@ -15,7 +15,7 @@ import com.prabhakar.jantagroceryadmin.R
 import com.prabhakar.jantagroceryadmin.Utils
 import com.prabhakar.jantagroceryadmin.databinding.FragmentOTPBinding
 import com.prabhakar.jantagroceryadmin.models.AdminModel
-import com.prabhakar.jantagroceryadmin.view.activity.HomeActivity
+import com.prabhakar.jantagroceryadmin.view.activity.AdminActivity
 import com.prabhakar.jantagroceryadmin.viewmodels.AuthViewModel
 import kotlinx.coroutines.launch
 
@@ -143,7 +143,7 @@ class OTPFragment : Fragment() {
                 if (it) {
                     Utils.hideDialog()
                     Utils.showToast(requireContext(), "Signing Complete !")
-                    startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                    startActivity(Intent(requireActivity(), AdminActivity::class.java))
                     requireActivity().finish()
                 } else {
                     Utils.hideDialog()

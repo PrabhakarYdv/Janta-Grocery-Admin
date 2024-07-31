@@ -27,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 viewModel.exposeCurrentUserStatus.collect {
                     if (it) {
-                        startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+                        startActivity(Intent(this@SplashActivity, AdminActivity::class.java))
                         finish()
                     } else {
                         startActivity(Intent(this@SplashActivity, AuthActivity::class.java))
