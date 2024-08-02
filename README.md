@@ -1,1 +1,1 @@
-## Janta Grocery Admin
+## Janta Grocery Admin App
