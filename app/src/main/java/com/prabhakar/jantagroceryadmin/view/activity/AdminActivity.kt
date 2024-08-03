@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.prabhakar.jantagroceryadmin.R
+import com.prabhakar.jantagroceryadmin.Utils
 import com.prabhakar.jantagroceryadmin.databinding.ActivityAdminBinding
 
 class AdminActivity : AppCompatActivity() {
@@ -14,6 +15,8 @@ class AdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Utils.setStatusBarColor(this, R.color.blue)
 
         NavigationUI.setupWithNavController(
             binding.bottomMenu,

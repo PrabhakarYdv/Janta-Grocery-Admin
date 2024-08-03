@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.prabhakar.jantagroceryadmin.databinding.ProgressBarBinding
+import java.util.UUID
 
 object Utils {
     fun showToast(context: Context, message: String) {
@@ -47,5 +48,10 @@ object Utils {
             val color = ContextCompat.getColor(activity, color)
             statusBarColor = color
         }
+    }
+
+    fun getRandomId(): String {
+        val uuid = UUID.randomUUID()
+        return uuid.toString().replace("-", "")
     }
 }
