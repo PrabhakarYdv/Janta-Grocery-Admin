@@ -39,6 +39,7 @@
         android:id="@+id/categoriesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:listitem="@layout/category_item_layout"
         android:layout_margin="5dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
