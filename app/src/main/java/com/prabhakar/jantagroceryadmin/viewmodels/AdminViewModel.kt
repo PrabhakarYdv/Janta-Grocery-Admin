@@ -2,12 +2,18 @@ package com.prabhakar.jantagroceryadmin.viewmodels
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.prabhakar.jantagroceryadmin.Utils
 import com.prabhakar.jantagroceryadmin.models.ProductModel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.callbackFlow
 import java.util.UUID
 
 class AdminViewModel : ViewModel() {
@@ -61,5 +67,30 @@ class AdminViewModel : ViewModel() {
                         _isProductSaved.value = true
                     }
             }
+    }
+
+    fun fetchAllProduct(): Flow<List<ProductModel>> = callbackFlow {
+        val db = FirebaseDatabase.getInstance().getReference("Admin").child("All products")
+
+        val eventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val products = ArrayList<ProductModel>()
+                for (product in snapshot.children) {
+                    val data = product.getValue(ProductModel::class.java)
+                    products.add(data!!)
+                }
+                trySend(products)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        }
+        db.addValueEventListener(eventListener)
+
+        awaitClose {
+            db.removeEventListener(eventListener)
+
+        }
     }
 }

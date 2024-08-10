@@ -5,18 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.prabhakar.jantagroceryadmin.R
 import com.prabhakar.jantagroceryadmin.adapter.CategoryAdapter
+import com.prabhakar.jantagroceryadmin.adapter.ProductAdapter
 import com.prabhakar.jantagroceryadmin.databinding.FragmentHomeBinding
 import com.prabhakar.jantagroceryadmin.models.CategoryModel
+import com.prabhakar.jantagroceryadmin.viewmodels.AdminViewModel
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val categoryList = arrayListOf<CategoryModel>()
-    private lateinit var adapter: CategoryAdapter
+    private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var productAdapter: ProductAdapter
+    private val adminViewModel: AdminViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,12 +32,13 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater)
 
-        buildList()
-        setRecyclerView()
+        buildCategoryList()
+        setCategoryRecyclerView()
+        getAllProduct()
         return binding.root
     }
 
-    private fun buildList() {
+    private fun buildCategoryList() {
         categoryList.add(CategoryModel(R.drawable.cold_and_juices, "All"))
         categoryList.add(CategoryModel(R.drawable.vegetable, "Vegetables & Fruits"))
         categoryList.add(CategoryModel(R.drawable.dairy_breakfast, "Dairy & Breakfast"))
@@ -53,11 +62,24 @@ class HomeFragment : Fragment() {
         categoryList.add(CategoryModel(R.drawable.pet_care, "Pet Care"))
     }
 
-    private fun setRecyclerView() {
-        adapter = CategoryAdapter(categoryList)
+    private fun setCategoryRecyclerView() {
+        categoryAdapter = CategoryAdapter(categoryList)
         val orientation: Int = RecyclerView.HORIZONTAL;
-        binding.categoriesRecyclerView.layoutManager =LinearLayoutManager(requireContext(), orientation, false)
-        binding.categoriesRecyclerView.adapter = adapter
+        binding.categoriesRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), orientation, false)
+        binding.categoriesRecyclerView.adapter = categoryAdapter
+    }
+
+    private fun getAllProduct() {
+        lifecycleScope.launch {
+            adminViewModel.fetchAllProduct().collect {
+                productAdapter = ProductAdapter()
+                binding.productsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+                binding.productsRecyclerView.adapter = productAdapter
+                productAdapter.differ.submitList(it)
+            }
+        }
+
     }
 
 }
