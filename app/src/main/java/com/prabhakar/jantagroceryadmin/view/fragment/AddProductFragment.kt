@@ -44,7 +44,9 @@ class AddProductFragment : Fragment() {
 
         setAutoCompleteTextView()
         imageSelect()
-        addProduct()
+        binding.btnAddProduct.setOnClickListener{
+            addProduct()
+        }
 
         return binding.root
     }
