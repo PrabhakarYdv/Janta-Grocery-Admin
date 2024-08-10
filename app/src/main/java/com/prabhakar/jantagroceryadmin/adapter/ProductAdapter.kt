@@ -31,6 +31,7 @@ class ProductAdapter() : RecyclerView.Adapter<ProductViewHolder>() {
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val productModel = differ.currentList[position]
+        holder.setData(productModel)
         holder.binding.apply {
             val imageList = ArrayList<SlideModel>()
             val productImage = productModel.productImageUris
