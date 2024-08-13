@@ -69,7 +69,7 @@ class AdminViewModel : ViewModel() {
             }
     }
 
-    fun fetchAllProduct(): Flow<List<ProductModel>> = callbackFlow {
+    fun fetchAllProduct(category: String): Flow<List<ProductModel>> = callbackFlow {
         val db = FirebaseDatabase.getInstance().getReference("Admin").child("All products")
 
         val eventListener = object : ValueEventListener {
@@ -77,7 +77,9 @@ class AdminViewModel : ViewModel() {
                 val products = ArrayList<ProductModel>()
                 for (product in snapshot.children) {
                     val data = product.getValue(ProductModel::class.java)
-                    products.add(data!!)
+                        if (category=="All" || data?.productCategory==category){
+                            products.add(data!!)
+                        }
                 }
                 trySend(products)
             }

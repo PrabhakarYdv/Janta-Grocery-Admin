@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
 
         buildCategoryList()
         setCategoryRecyclerView()
-        getAllProduct()
+        getAllProduct("All")
         return binding.root
     }
 
@@ -63,16 +63,23 @@ class HomeFragment : Fragment() {
     }
 
     private fun setCategoryRecyclerView() {
-        categoryAdapter = CategoryAdapter(categoryList)
+        categoryAdapter = CategoryAdapter(categoryList, ::onClickCategory)
         val orientation: Int = RecyclerView.HORIZONTAL;
         binding.categoriesRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), orientation, false)
         binding.categoriesRecyclerView.adapter = categoryAdapter
     }
 
-    private fun getAllProduct() {
+    private fun getAllProduct(category: String) {
         lifecycleScope.launch {
-            adminViewModel.fetchAllProduct().collect {
+            adminViewModel.fetchAllProduct(category).collect {
+                if (it.isEmpty()) {
+                    binding.productsRecyclerView.visibility = View.GONE
+                    binding.relativeLayout.visibility = View.VISIBLE
+                } else {
+                    binding.productsRecyclerView.visibility = View.VISIBLE
+                    binding.relativeLayout.visibility = View.GONE
+                }
                 productAdapter = ProductAdapter()
                 binding.productsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
                 binding.productsRecyclerView.adapter = productAdapter
@@ -82,4 +89,7 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun onClickCategory(categoryModel: CategoryModel) {
+        getAllProduct(categoryModel.category)
+    }
 }
