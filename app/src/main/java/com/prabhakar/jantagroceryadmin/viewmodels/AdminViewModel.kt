@@ -107,4 +107,8 @@ class AdminViewModel : ViewModel() {
             .child("Product Type/${model.productType}/${model.productRandomId}")
             .setValue(model)
     }
+
+    fun searchProduct(){
+
+    }
 }

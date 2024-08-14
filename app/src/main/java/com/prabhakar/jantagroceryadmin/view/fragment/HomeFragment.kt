@@ -2,6 +2,8 @@ package com.prabhakar.jantagroceryadmin.view.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,6 +94,7 @@ class HomeFragment : Fragment() {
                 binding.productsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
                 binding.productsRecyclerView.adapter = productAdapter
                 productAdapter.differ.submitList(it)
+                productAdapter.originalList = it as ArrayList<ProductModel>
                 binding.shimmerEffect.visibility = View.GONE
                 binding.productsRecyclerView.visibility = View.VISIBLE
             }
@@ -145,7 +148,7 @@ class HomeFragment : Fragment() {
                 productModel.productType = editProduct.productType.toString()
                 adminViewModel.updateProduct(productModel)
             }
-            Utils.showToast(requireContext(),"Product has been Updated")
+            Utils.showToast(requireContext(), "Product has been Updated")
             dialog.dismiss()
         }
     }
@@ -161,5 +164,23 @@ class HomeFragment : Fragment() {
             productUnit.setAdapter(unit)
             productType.setAdapter(type)
         }
+    }
+
+    private fun searchProduct() {
+        binding.searchBar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(str: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val query=str.toString().trim()
+                productAdapter.filter.filter(query)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+        })
     }
 }
