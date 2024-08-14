@@ -37,6 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
+                    android:enabled="false"
                     android:hint="Product Name"
                     android:inputType="text" />
 
@@ -69,6 +70,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="10dp"
+                        android:enabled="false"
                         android:hint="Product Quantity(1Kg,1Ltr)"
                         android:inputType="number" />
 
@@ -92,6 +94,7 @@
                         android:id="@+id/productUnit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
                         android:hint="Unit" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -125,6 +128,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="10dp"
+                        android:enabled="false"
                         android:hint="Product Price (INR)"
                         android:inputType="number" />
 
@@ -149,6 +153,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="10dp"
+                        android:enabled="false"
                         android:hint="No. of stock"
                         android:inputType="number" />
 
@@ -177,6 +182,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/blue"
+                    android:enabled="false"
                     android:hint="Product Category" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -202,6 +208,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/blue"
+                    android:enabled="false"
                     android:hint="Product Type" />
 
             </com.google.android.material.textfield.TextInputLayout>

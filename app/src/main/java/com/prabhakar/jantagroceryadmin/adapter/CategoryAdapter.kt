@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.prabhakar.jantagroceryadmin.databinding.CategoryItemLayoutBinding
 import com.prabhakar.jantagroceryadmin.models.CategoryModel
+import com.prabhakar.jantagroceryadmin.models.ProductModel
 import com.prabhakar.jantagroceryadmin.viewholder.CategoryViewHolder
 
 class CategoryAdapter(
@@ -29,4 +30,6 @@ class CategoryAdapter(
     override fun getItemCount(): Int {
         return categoryList.size
     }
+
+
 }

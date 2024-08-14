@@ -77,9 +77,9 @@ class AdminViewModel : ViewModel() {
                 val products = ArrayList<ProductModel>()
                 for (product in snapshot.children) {
                     val data = product.getValue(ProductModel::class.java)
-                        if (category=="All" || data?.productCategory==category){
-                            products.add(data!!)
-                        }
+                    if (category == "All" || data?.productCategory == category) {
+                        products.add(data!!)
+                    }
                 }
                 trySend(products)
             }
@@ -94,5 +94,17 @@ class AdminViewModel : ViewModel() {
             db.removeEventListener(eventListener)
 
         }
+    }
+
+    fun updateProduct(model: ProductModel) {
+        FirebaseDatabase.getInstance().getReference("Admin")
+            .child("All Products/${model.productRandomId}")
+            .setValue(model)
+        FirebaseDatabase.getInstance().getReference("Admin")
+            .child("Products Category/${model.productRandomId}")
+            .setValue(model)
+        FirebaseDatabase.getInstance().getReference("Admin")
+            .child("Products Type/${model.productRandomId}")
+            .setValue(model)
     }
 }

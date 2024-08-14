@@ -1,20 +1,26 @@
 package com.prabhakar.jantagroceryadmin.view.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.prabhakar.jantagroceryadmin.Constraints
 import com.prabhakar.jantagroceryadmin.R
+import com.prabhakar.jantagroceryadmin.Utils
 import com.prabhakar.jantagroceryadmin.adapter.CategoryAdapter
 import com.prabhakar.jantagroceryadmin.adapter.ProductAdapter
+import com.prabhakar.jantagroceryadmin.databinding.EditProductLayoutBinding
 import com.prabhakar.jantagroceryadmin.databinding.FragmentHomeBinding
 import com.prabhakar.jantagroceryadmin.models.CategoryModel
+import com.prabhakar.jantagroceryadmin.models.ProductModel
 import com.prabhakar.jantagroceryadmin.viewmodels.AdminViewModel
 import kotlinx.coroutines.launch
 
@@ -82,7 +88,7 @@ class HomeFragment : Fragment() {
                     binding.productsRecyclerView.visibility = View.VISIBLE
                     binding.relativeLayout.visibility = View.GONE
                 }
-                productAdapter = ProductAdapter()
+                productAdapter = ProductAdapter(::onClickEditBtn)
                 binding.productsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
                 binding.productsRecyclerView.adapter = productAdapter
                 productAdapter.differ.submitList(it)
@@ -95,5 +101,65 @@ class HomeFragment : Fragment() {
 
     private fun onClickCategory(categoryModel: CategoryModel) {
         getAllProduct(categoryModel.category)
+    }
+
+    private fun onClickEditBtn(productModel: ProductModel) {
+        val editProduct = EditProductLayoutBinding.inflate(LayoutInflater.from(requireContext()))
+        editProduct.apply {
+            productName.setText(productModel.productName)
+            productQuantity.setText(productModel.productQuantity.toString())
+            productUnit.setText(productModel.productUnit)
+            productPrice.setText(productModel.productPrice.toString())
+            productStock.setText(productModel.productStock.toString())
+            productCategory.setText(productModel.productCategory)
+            productType.setText(productModel.productType)
+        }
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(editProduct.root)
+            .create()
+        dialog.show()
+
+        editProduct.btnEdit.setOnClickListener {
+            editProduct.apply {
+                productName.isEnabled = true
+                productQuantity.isEnabled = true
+                productUnit.isEnabled = true
+                productPrice.isEnabled = true
+                productStock.isEnabled = true
+                productCategory.isEnabled = true
+                productType.isEnabled = true
+            }
+        }
+        setAutoCompleteTextView(editProduct)
+
+        editProduct.btnSave.setOnClickListener {
+
+            lifecycleScope.launch {
+                productModel.productName = editProduct.productName.toString()
+                productModel.productQuantity = editProduct.productQuantity.toString().toInt()
+                productModel.productUnit = editProduct.productUnit.toString()
+                productModel.productPrice = editProduct.productPrice.toString().toInt()
+                productModel.productStock = editProduct.productStock.toString().toInt()
+                productModel.productCategory = editProduct.productCategory.toString()
+                productModel.productType = editProduct.productType.toString()
+                adminViewModel.updateProduct(productModel)
+            }
+            Utils.showToast(requireContext(),"Product has been Updated")
+            dialog.dismiss()
+        }
+    }
+
+    private fun setAutoCompleteTextView(editProduct: EditProductLayoutBinding) {
+        val category =
+            ArrayAdapter(requireContext(), R.layout.show_list, Constraints.allProductsCategory)
+        val unit = ArrayAdapter(requireContext(), R.layout.show_list, Constraints.allUnits)
+        val type = ArrayAdapter(requireContext(), R.layout.show_list, Constraints.allProductType)
+
+        editProduct.apply {
+            productCategory.setAdapter(category)
+            productUnit.setAdapter(unit)
+            productType.setAdapter(type)
+        }
     }
 }

@@ -52,8 +52,7 @@ class AddProductFragment : Fragment() {
     }
 
     private fun setAutoCompleteTextView() {
-        val category =
-            ArrayAdapter(requireContext(), R.layout.show_list, Constraints.allProductsCategory)
+        val category =ArrayAdapter(requireContext(), R.layout.show_list, Constraints.allProductsCategory)
         val unit = ArrayAdapter(requireContext(), R.layout.show_list, Constraints.allUnits)
         val type = ArrayAdapter(requireContext(), R.layout.show_list, Constraints.allProductType)
 

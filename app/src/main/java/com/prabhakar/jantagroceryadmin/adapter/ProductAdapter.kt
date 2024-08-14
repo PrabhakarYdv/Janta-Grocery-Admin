@@ -10,7 +10,8 @@ import com.prabhakar.jantagroceryadmin.databinding.ProductItemLayoutBinding
 import com.prabhakar.jantagroceryadmin.models.ProductModel
 import com.prabhakar.jantagroceryadmin.viewholder.ProductViewHolder
 
-class ProductAdapter() : RecyclerView.Adapter<ProductViewHolder>() {
+class ProductAdapter(val onClickEditBtn: (ProductModel) -> Unit) :
+    RecyclerView.Adapter<ProductViewHolder>() {
     val diffUtil = object : DiffUtil.ItemCallback<ProductModel>() {
         override fun areItemsTheSame(oldItem: ProductModel, newItem: ProductModel): Boolean {
             return oldItem.productRandomId == newItem.productRandomId
@@ -25,7 +26,8 @@ class ProductAdapter() : RecyclerView.Adapter<ProductViewHolder>() {
     val differ = AsyncListDiffer(this, diffUtil)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val view = ProductItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view =
+            ProductItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductViewHolder(view)
     }
 
@@ -42,6 +44,11 @@ class ProductAdapter() : RecyclerView.Adapter<ProductViewHolder>() {
 
             imageSlider.setImageList(imageList)
         }
+
+        holder.binding.edit.setOnClickListener {
+            onClickEditBtn(productModel)
+        }
+
 
     }
 
