@@ -71,6 +71,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun getAllProduct(category: String) {
+        binding.shimmerEffect.visibility = View.VISIBLE
+        binding.productsRecyclerView.visibility = View.GONE
         lifecycleScope.launch {
             adminViewModel.fetchAllProduct(category).collect {
                 if (it.isEmpty()) {
@@ -84,6 +86,8 @@ class HomeFragment : Fragment() {
                 binding.productsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
                 binding.productsRecyclerView.adapter = productAdapter
                 productAdapter.differ.submitList(it)
+                binding.shimmerEffect.visibility = View.GONE
+                binding.productsRecyclerView.visibility = View.VISIBLE
             }
         }
 
