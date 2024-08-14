@@ -57,11 +57,11 @@ class AdminViewModel : ViewModel() {
             .setValue(productModel)
             .addOnSuccessListener {
                 FirebaseDatabase.getInstance().getReference("Admin")
-                    .child("Products Category/${productModel.productRandomId}")
+                    .child("${productModel.productCategory}/${productModel.productRandomId}")
                     .setValue(productModel)
             }.addOnSuccessListener {
                 FirebaseDatabase.getInstance().getReference("Admin")
-                    .child("Products Type/${productModel.productRandomId}")
+                    .child("${productModel.productType}/${productModel.productRandomId}")
                     .setValue(productModel)
                     .addOnSuccessListener {
                         _isProductSaved.value = true
@@ -101,10 +101,10 @@ class AdminViewModel : ViewModel() {
             .child("All Products/${model.productRandomId}")
             .setValue(model)
         FirebaseDatabase.getInstance().getReference("Admin")
-            .child("Products Category/${model.productRandomId}")
+            .child("${model.productCategory}/${model.productRandomId}")
             .setValue(model)
         FirebaseDatabase.getInstance().getReference("Admin")
-            .child("Products Type/${model.productRandomId}")
+            .child("${model.productType}/${model.productRandomId}")
             .setValue(model)
     }
 }
